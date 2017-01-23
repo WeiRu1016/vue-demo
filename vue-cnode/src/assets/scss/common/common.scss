@@ -1,0 +1,13 @@
+.page{
+  margin-top: 50px;
+}
+.avator{
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  vertical-align: middle;
+  border-radius: 50%;
+  position: absolute;
+  top:50%;
+  transform:translateY(-50%);
+};
