@@ -1,14 +1,5 @@
 export default [
   {
-    path: '*',
-    name: 'index',
-    component: (reslove) => {
-      require.ensure([], () => {
-        reslove(require('./views/index.vue'))
-      })
-    }
-  },
-  {
     path: '/list',
     name: 'list',
     component: (reslove) => {
@@ -18,6 +9,24 @@ export default [
     },
     meta: {
       keepAlive: true
+    }
+  },
+  {
+    path: '/add',
+    name: 'add',
+    component: (reslove) => {
+      require.ensure([], () => {
+        reslove(require('./views/add.vue'))
+      })
+    }
+  },
+  {
+    path: '*',
+    name: 'index',
+    component: (reslove) => {
+      require.ensure([], () => {
+        reslove(require('./views/index.vue'))
+      })
     }
   }
 ]

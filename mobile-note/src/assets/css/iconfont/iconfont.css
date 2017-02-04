@@ -1,26 +1,64 @@
 @font-face {
-  font-family: 'iconfont';
-  src: url('//at.alicdn.com/t/font_1449145493_7316074.eot'); /* IE9*/
-  src: url('//at.alicdn.com/t/font_1449145493_7316074.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('//at.alicdn.com/t/font_1449145493_7316074.woff') format('woff'), /* chrome、firefox */
-  url('//at.alicdn.com/t/font_1449145493_7316074.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
-  url('//at.alicdn.com/t/font_1449145493_7316074.svg#iconfont') format('svg'); /* iOS 4.1- */
+  font-family: 'iconfont';  /* project id 226645 */
+  src: url('//at.alicdn.com/t/font_za8loq9c7tuwstt9.eot');
+  src: url('//at.alicdn.com/t/font_za8loq9c7tuwstt9.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_za8loq9c7tuwstt9.woff') format('woff'),
+  url('//at.alicdn.com/t/font_za8loq9c7tuwstt9.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_za8loq9c7tuwstt9.svg#iconfont') format('svg');
 }
 
 .iconfont {
-  font-family: "iconfont" !important;
-  font-size: 16px;
-  font-style: normal;
-  -webkit-font-smoothing: antialiased;
-  -webkit-text-stroke-width: 0.2px;
-  -moz-osx-font-smoothing: grayscale;
+    font-family: "iconfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+}
+.iconfont.icon{
+  width: 50px;
+  height: 50px;
+  font-size: 30px;
+  line-height: 40px;
+  border:2px solid #000;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
+  padding: 5px;
+  border-radius: 50%;
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+}
+.iconfont.food::before{
+  content: "\e7b8";
+}
+.iconfont.buy::before{
+  content: "\e849";
+}
+.iconfont.house::before{
+  content: "\e783";
+}
+.iconfont.traffic::before{
+  content: "\e7db";
+}
+.iconfont.in::before{
+  content: "\e77a";
+}
+.iconfont.other::before{
+  content: "\e68d"
+}
+.iconfont.cloth::before{
+  content: "\e727"
 }
 
-.icon_add::before{
-  content: "\f067";
-  margin-right: 30px; 
+.icon-list::before{
+  content: "\e795";
+  margin-right: 20px;
 }
-.icon_menu::before{
-  content: "三";
-  margin-right: 30px;
+.icon-sum::before{
+  content: "\e6c4";
+  margin-right: 20px;
+}
+.icon-chart::before{
+  content: "\e618";
+  margin-right: 20px;
 }

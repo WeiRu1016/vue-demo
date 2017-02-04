@@ -8,6 +8,7 @@ import store from './vuex/store'
 
 Vue.use(VueRouter)
 
+console.log('main.js')
 const router = new VueRouter({
   routes,
   mode: 'history'

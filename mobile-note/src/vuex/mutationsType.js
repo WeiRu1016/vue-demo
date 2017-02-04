@@ -1,0 +1,5 @@
+export const ADDITEM = 'ADDITEM'
+export const REMOVEITEM = 'REMOVEITEM'
+export const UPDATEITEM = 'UPDATEITEM'
+export const INIT = 'INIT'
+export const GETTYPE = 'GETTYPE'

@@ -1,9 +1,9 @@
 <template>
   <div>
     <keep-alive>
-      <router-view v-if="$router.meta && $router.meta.keepAlive"></router-view>
+      <router-view v-if="$route.meta && $route.meta.keepAlive"></router-view>
     </keep-alive>
-    <router-view v-if="!($router.meta && $router.meta.keepAlive)"></router-view>
+    <router-view v-if="!($route.meta && $route.meta.keepAlive)"></router-view>
   </div>
 </template>
 
@@ -12,6 +12,9 @@ import './assets/css/iconfont/iconfont.css'
 import './assets/css/CV.scss'
 
 export default {
-  name: 'app'
+  name: 'app',
+  mounted () {
+    console.log(this.$route)
+  }
 }
 </script>
