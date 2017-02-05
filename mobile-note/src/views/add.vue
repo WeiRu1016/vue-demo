@@ -2,8 +2,8 @@
   <div>
     <my-head title="添加"></my-head>
     <div class="page">
-      <type-list></type-list>
-      <my-counter type="cloth" typeName="衣物"></my-counter>
+      <type-list @setType="setType"></type-list>
+      <my-counter :type="type" :typeName="typeName"></my-counter>
     </div>
   </div>
 </template>
@@ -13,6 +13,19 @@
   import myCounter from '../components/myCounter.vue'
   export default{
     name: 'add',
+    data: function () {
+      return {
+        type: 'cloth',
+        typeName: '衣服'
+      }
+    },
+    methods: {
+      setType (type, typeName) {
+        debugger
+        this.type = type
+        this.typeName = typeName
+      }
+    },
     components: {
       myHead,
       typeList,
