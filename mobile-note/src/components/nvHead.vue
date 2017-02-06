@@ -3,7 +3,7 @@
     <div v-if="show" class="page_over" @click="hideMenu"></div>
     <header class="nvHead" :class="{show:show}">
       <span class="iconfont menu" @click="showMenu">&#xe795;</span>
-      <router-link :to="{name: 'add'}">
+      <router-link :to="{name: 'add',query: query}">
         <span class="iconfont add">&#xe775;</span>
       </router-link>
       <span class="title" v-text="title"></span>
@@ -16,8 +16,13 @@
   export default {
     name: 'nvHead',
     props: {
-      title: String,
-      required: true
+      title: {
+        type: String,
+        required: true
+      },
+      query: {
+        type: Object
+      }
     },
     data: function () {
       return {
@@ -56,6 +61,7 @@
         height: 45px;
         background-color: #fff;
         box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
+        margin-top: -1px;
         top: 0;
         left: 0;
         width: 100%;

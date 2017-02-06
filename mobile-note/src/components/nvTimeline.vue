@@ -2,7 +2,9 @@
   <div>
     <div v-for="(item, key) in groupList">
       <div class="line"></div>
-      <div class="point"><span class="date">{{key}}</span><span class="money">{{item.incoming - item.outcoming}}</span></div>
+      <router-link :to="{name: 'detail', query:{date:key}}">
+        <div class="point"><span class="date">{{key}}</span><span class="money">{{item.incoming - item.outcoming}}</span></div>
+      </router-link>
       <div class="item" v-for="index in item.data">
         <div class="line"></div>
         <span class="iconfont icon" :class="index.category"></span>
@@ -10,7 +12,7 @@
         <span class="text right">{{index.money}}</span>
       </div>
     </div>
-    <div class="noItem" v-if="!groupList.length">
+    <div class="noItem" v-if="groupList.length === 0">
       <router-link :to="{name: 'add'}">
         <div class="iconfont add">&#xe775;</div>
       </router-link>
@@ -36,6 +38,13 @@
   }
 </script>
 <style scoped lang="scss">
+  a{
+    color: #000;
+  }
+  a:lived,a:visited,a:hover,a:active{
+    outline: none;
+    background: none;
+  }
   .line{
     height: 30px;
     width: 2px;

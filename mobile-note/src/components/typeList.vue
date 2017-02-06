@@ -1,13 +1,13 @@
 <template>
   <div class="typeList">
     <div v-if="inTypes" class="row">
-      <div class="cell" v-for="item in inTypes.category" @click="setType(item)">
+      <div class="cell" v-for="item in inTypes.category" @click="setType(inTypes.type, item)">
         <span class="iconfont icon" :class="item.category" ></span>
         <p class="text">{{item.typeName}}</p>
       </div>
     </div>
     <div class="row" v-if="outTypes">
-      <div class="cell" v-for="item in outTypes.category" @click="setType(item)">
+      <div class="cell" v-for="item in outTypes.category" @click="setType(outTypes.type, item)">
         <span class="iconfont icon" :class="item.category"></span>
         <p class="text">{{item.typeName}}</p>
       </div>
@@ -26,8 +26,9 @@
       ])
     },
     methods: {
-      setType (item) {
-        this.$emit('setType', item.category, item.typeName)
+      setType (type, item) {
+        debugger
+        this.$emit('setType', type, item.category, item.typeName)
       }
     }
   }

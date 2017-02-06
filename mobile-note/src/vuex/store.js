@@ -80,21 +80,22 @@ let store = new Vuex.Store({
   },
   actions: {
     addItem ({commit}, item) {
-      $.ajax({
-        type: 'post',
-        data: item,
-        dataType: 'jsonp',
-        url: '/api/list/add',
-        success: function (data) {
-          if (data.code === 200) {
-            console.log('添加成功')
-            commit(mutationsType.ADDITEM, item)
-          }
-        },
-        error: function (error) {
-          console.error(error)
-        }
-      })
+      console.log('addItem', item)
+      commit(mutationsType.ADDITEM, item)
+      // $.ajax({
+      //   type: 'post',
+      //   data: item,
+      //   url: '/api/list/add',
+      //   success: function (data) {
+      //     if (data.code === 200) {
+      //       console.log('添加成功')
+      //       commit(mutationsType.ADDITEM, data.item)
+      //     }
+      //   },
+      //   error: function (error) {
+      //     console.error(error)
+      //   }
+      // })
     },
     init ({commit}) {
       console.log('ajax请求初始化')

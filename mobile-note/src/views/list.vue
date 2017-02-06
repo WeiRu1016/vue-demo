@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nv-head title="首页"></nv-head>
+    <nv-head title="首页" :query="{}"></nv-head>
     <div class="page">
       <nv-timeline></nv-timeline>
     </div>

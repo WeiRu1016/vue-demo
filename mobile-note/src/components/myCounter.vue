@@ -1,7 +1,7 @@
 <template>
   <div id="counter">
     <div class="header">
-      <span class="iconfont icon" :class="type" ></span>
+      <span class="iconfont icon" :class="category" ></span>
       <span class="text">{{typeName}}</span>
       <span class="money">&yen{{money}}</span>
     </div>
@@ -40,25 +40,37 @@
     data: function () {
       return {
         show: true,
-        numbers: ['', ''],
         currentIndex: 0,
-        op: '',
-        money: 0
+        op: ''
       }
     },
     computed: {
-      // money () {
-      //   return this.numbers[this.currentIndex] || '0'
-      // }
+      numbers () {
+        return this.count > 0 ? [this.count.toString(), ''] : ['', '']
+      },
+      money () {
+        return this.count
+      }
     },
     props: {
       type: {
         type: String,
         required: true
       },
+      category: {
+        type: String,
+        required: true
+      },
       typeName: {
         type: String,
         required: true
+      },
+      date: {
+        type: String
+      },
+      count: {
+        type: Number,
+        default: 0
       }
     },
     methods: {
@@ -103,6 +115,7 @@
         this.money = this.numbers[this.currentIndex] || '0'
       },
       clear () {
+        debugger
         this.money = 0
         this.numbers = ['', '']
         this.currentIndex = 0
@@ -137,6 +150,14 @@
       },
       submit () {
         this.money = this.numbers[this.currentIndex] || '0'
+        let item = {
+          type: this.type,
+          category: this.category,
+          money: this.money,
+          typeName: this.typeName,
+          date: this.date || new Date()
+        }
+        this.$emit('submit', item)
       }
     }
   }

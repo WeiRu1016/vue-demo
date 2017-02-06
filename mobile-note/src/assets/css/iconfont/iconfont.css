@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'iconfont';  /* project id 226645 */
-  src: url('//at.alicdn.com/t/font_za8loq9c7tuwstt9.eot');
-  src: url('//at.alicdn.com/t/font_za8loq9c7tuwstt9.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_za8loq9c7tuwstt9.woff') format('woff'),
-  url('//at.alicdn.com/t/font_za8loq9c7tuwstt9.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_za8loq9c7tuwstt9.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_97a9xomk8b9e8kt9.eot');
+  src: url('//at.alicdn.com/t/font_97a9xomk8b9e8kt9.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_97a9xomk8b9e8kt9.woff') format('woff'),
+  url('//at.alicdn.com/t/font_97a9xomk8b9e8kt9.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_97a9xomk8b9e8kt9.svg#iconfont') format('svg');
 }
 
 .iconfont {
@@ -49,7 +49,6 @@
 .iconfont.cloth::before{
   content: "\e727"
 }
-
 .icon-list::before{
   content: "\e795";
   margin-right: 20px;

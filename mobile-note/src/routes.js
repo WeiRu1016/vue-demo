@@ -6,9 +6,6 @@ export default [
       require.ensure([], () => {
         reslove(require('./views/list.vue'))
       })
-    },
-    meta: {
-      keepAlive: true
     }
   },
   {
@@ -17,6 +14,24 @@ export default [
     component: (reslove) => {
       require.ensure([], () => {
         reslove(require('./views/add.vue'))
+      })
+    }
+  },
+  {
+    path: '/detail',
+    name: 'detail',
+    component: (reslove) => {
+      require.ensure([], () => {
+        reslove(require('./views/detail.vue'))
+      })
+    }
+  },
+  {
+    path: '/edit',
+    name: 'edit',
+    component: (reslove) => {
+      require.ensure([], () => {
+        reslove(require('./views/edit.vue'))
       })
     }
   },
