@@ -37,21 +37,6 @@
 <script>
   export default {
     name: 'myCounter',
-    data: function () {
-      return {
-        show: true,
-        currentIndex: 0,
-        op: ''
-      }
-    },
-    computed: {
-      numbers () {
-        return this.count > 0 ? [this.count.toString(), ''] : ['', '']
-      },
-      money () {
-        return this.count
-      }
-    },
     props: {
       type: {
         type: String,
@@ -71,6 +56,15 @@
       count: {
         type: Number,
         default: 0
+      }
+    },
+    data: function () {
+      return {
+        show: true,
+        currentIndex: 0,
+        op: '',
+        numbers: this.count > 0 ? [this.count.toString(), ''] : ['', ''],
+        money: this.count
       }
     },
     methods: {
@@ -155,7 +149,7 @@
           category: this.category,
           money: this.money,
           typeName: this.typeName,
-          date: this.date || new Date()
+          date: this.date ? new Date(this.date) : new Date()
         }
         this.$emit('submit', item)
       }

@@ -6,9 +6,7 @@ import $ from 'webpack-zepto'
 Vue.use(Vuex)
 
 let state = {
-  currentDate: new Date(),
   list: [],
-  currentItem: null,
   typeList: []
 }
 let store = new Vuex.Store({
@@ -17,15 +15,24 @@ let store = new Vuex.Store({
     [mutationsType.ADDITEM] (state, item) {
       state.list.push(item)
     },
-    [mutationsType.REMOVEITEM] (state, index) {
-      let item = state.list.splice(index, 1)[0]
-      if (item._id === state.currentItem._id) {
-        state.currentItem = null
+    [mutationsType.REMOVEITEM] (state, id) {
+      let list = state.list
+      for (let i = 0, l = list.length; i < l; i++) {
+        if (list[i]._id === id) {
+          list.splice(i, 1)
+          break
+        }
       }
     },
     [mutationsType.UPDATEITEM] (state, item) {
-      for (let k in item) {
-        state.currentItem[k] = item[k]
+      let list = state.list
+      for (let i = 0, l = list.length; i < l; i++) {
+        if (list[i]._id === item.id) {
+          for (let k in item) {
+            list[k] = item[k]
+          }
+          break
+        }
       }
     },
     [mutationsType.INIT] (state, payload) {
@@ -82,20 +89,6 @@ let store = new Vuex.Store({
     addItem ({commit}, item) {
       console.log('addItem', item)
       commit(mutationsType.ADDITEM, item)
-      // $.ajax({
-      //   type: 'post',
-      //   data: item,
-      //   url: '/api/list/add',
-      //   success: function (data) {
-      //     if (data.code === 200) {
-      //       console.log('添加成功')
-      //       commit(mutationsType.ADDITEM, data.item)
-      //     }
-      //   },
-      //   error: function (error) {
-      //     console.error(error)
-      //   }
-      // })
     },
     init ({commit}) {
       console.log('ajax请求初始化')
@@ -127,43 +120,12 @@ let store = new Vuex.Store({
       })
     },
     removeItem ({commit}, id) {
-      $.ajax({
-        type: 'post',
-        data: {id: id},
-        url: '/api/list/remove',
-        success: function (data) {
-          if (data.code === 200) {
-            console.log('删除成功')
-            for (let i = 0, l = state.list.length; i < l; i++) {
-              let temp = state.list[i]
-              if (temp._id === id) {
-                commit(mutationsType.REMOVEITEM, i)
-                return
-              }
-            }
-          }
-        },
-        error: function (err) {
-          console.error(err)
-        }
-      })
+      commit(mutationsType.REMOVEITEM, id)
     },
-    updateItem ({commit}, id, item) {
-      $.ajax({
-        type: 'post',
-        url: '/api/list/update?id=' + id,
-        data: item,
-        success: function (data) {
-          if (data.code === 200) {
-            console.log('更新成功')
-            commit(mutationsType.UPDATEITEM, item)
-          }
-        }
-      })
+    updateItem ({commit}, item) {
+      commit(mutationsType.UPDATEITEM, item)
     }
   }
 })
-store.dispatch('init')
-store.dispatch('getTypes')
 export default store
 

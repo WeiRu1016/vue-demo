@@ -12,7 +12,7 @@
   import typeList from '../components/typeList.vue'
   import myCounter from '../components/myCounter.vue'
   import $ from 'webpack-zepto'
-  // import * as untils from '../assets/js/until'
+
   export default{
     name: 'edit',
     data: function () {
@@ -59,15 +59,16 @@
       },
       editSubmit (obj) {
         console.log('添加的item:', obj)
+        debugger
         $.ajax({
           type: 'post',
           data: obj,
-          url: `/api/list/update?id=${this.route.query.id}`,
+          url: `/api/list/update?id=${this.$route.query.id}`,
           success: (data) => {
             if (data.code === 200) {
               console.log('修改成功')
               debugger
-              this.$store.dispatch('updateItem', data.item.id, data.item)
+              this.$store.dispatch('updateItem', obj)
               this.$router.push({
                 name: 'list'
               })

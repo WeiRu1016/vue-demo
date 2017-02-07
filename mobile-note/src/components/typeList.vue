@@ -30,6 +30,9 @@
         debugger
         this.$emit('setType', type, item.category, item.typeName)
       }
+    },
+    mounted () {
+      this.$store.dispatch('getTypes')
     }
   }
 </script>

@@ -11,7 +11,6 @@
   import myHead from '../components/myHead.vue'
   import typeList from '../components/typeList.vue'
   import myCounter from '../components/myCounter.vue'
-  import * as untils from '../assets/js/until'
   import $ from 'webpack-zepto'
   
   export default{
@@ -25,7 +24,7 @@
     },
     computed: {
       date () {
-        return this.$route.query.date || untils.formatTime(new Date())
+        return this.$route.query.date || new Date().toLocaleDateString()
       }
     },
     methods: {

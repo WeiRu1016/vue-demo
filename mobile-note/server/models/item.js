@@ -5,7 +5,7 @@ var itemSchema = new mongoose.Schema({
   category: { type: String, enum: ['in', 'buy', 'cloth', 'traffic', 'house', 'food', 'other'] },
   money: Number,
   typeName: String,
-  date: { type: Date, default: Date.now }
+  date: { type: Date, default: new Date() }
 })
 itemSchema.set('toObject', { getters: true })
 
@@ -37,20 +37,20 @@ ItemDao.prototype.insert = function (query, callback) {
   })
 }
 ItemDao.prototype.remove = function (query, callback) {
-  ItemModel.remove(query).exec(function (err, callback) {
+  ItemModel.remove(query).exec(function (err) {
     return callback(err)
   })
 }
 ItemDao.prototype.update = function (id, obj, callback) {
-  ItemModel.update({ _id: id }, { $set: obj }).exec(function (err, doc) {
+  ItemModel.update({ _id: id }, { $set: obj }).exec(function (err) {
     if (err) {
       return callback(err)
     }
-    return callback(err, formatItems(doc, true))
+    return callback(err)
   })
 }
 ItemDao.prototype.findByDate = function (date, callback) {
-  ItemModel.where('date').gte(date.dateMin).lte(date.dateMax).exec(function (err, docs) {
+  ItemModel.where('date').gte(date.dateMin).lt(date.dateMax).exec(function (err, docs) {
     if (err) {
       return callback(err)
     } else {
@@ -58,23 +58,16 @@ ItemDao.prototype.findByDate = function (date, callback) {
     }
   })
 }
-var formatDate = function (date) {
-  date = new Date(date)
-  var year = date.getFullYear()
-  var month = date.getMonth() + 1
-  var day = date.getDate()
-  return [year, month, day].join('/')
-}
 var formatItems = function (items, flag) {
   if (flag) {
     items = items.toObject()
-    items.date = formatDate(items.date)
+    items.date = items.date.toLocaleDateString()
     return items
   }
   var list = []
   items.forEach(function (obj, index) {
     var temp = obj.toObject()
-    temp.date = formatDate(temp.date)
+    temp.date = temp.date.toLocaleDateString()
     list.push(temp)
   })
   return list

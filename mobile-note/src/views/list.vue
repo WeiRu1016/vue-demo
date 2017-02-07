@@ -15,6 +15,9 @@
     components: {
       nvHead,
       nvTimeline
+    },
+    mounted () {
+      this.$store.dispatch('init')
     }
   }
 </script>
