@@ -11,7 +11,6 @@
   import myHead from '../components/myHead.vue'
   import typeList from '../components/typeList.vue'
   import myCounter from '../components/myCounter.vue'
-  import $ from 'webpack-zepto'
 
   export default{
     name: 'edit',
@@ -32,51 +31,39 @@
         this.typeName = typeName
       },
       getItem (id) {
-        $.ajax({
-          url: '/api/list/findById',
-          type: 'get',
-          data: {
-            _id: id
-          },
-          success: (data) => {
-            debugger
-            if (data.code === 200) {
-              console.log(data)
-              console.log(data.item)
-              let item = data.item
-              this.item = item
-              this.date = item.date
-              this.category = item.category
-              this.type = item.type
-              this.typeName = item.typeName
-              this.money = parseFloat(item.money)
-            }
-          },
-          error: (err) => {
-            console.error(err)
+        this.$http.get('/api/list/findById', {params: {id: id}}).then(response => {
+          debugger
+          let data = response.body
+          if (data.code === 200) {
+            console.log(data)
+            console.log(data.item)
+            let item = data.item
+            this.item = item
+            this.date = item.date
+            this.category = item.category
+            this.type = item.type
+            this.typeName = item.typeName
+            this.money = parseFloat(item.money)
           }
+        }).catch(err => {
+          console.error(err)
         })
       },
       editSubmit (obj) {
         console.log('添加的item:', obj)
         debugger
-        $.ajax({
-          type: 'post',
-          data: obj,
-          url: `/api/list/update?id=${this.$route.query.id}`,
-          success: (data) => {
-            if (data.code === 200) {
-              console.log('修改成功')
-              debugger
-              this.$store.dispatch('updateItem', obj)
-              this.$router.push({
-                name: 'list'
-              })
-            }
-          },
-          error: (error) => {
-            console.error(error)
+        this.$http.post(`/api/list/update?id=${this.$route.query.id}`, {body: obj}).then(response => {
+          let data = response.body
+          if (data.code === 200) {
+            console.log('修改成功')
+            debugger
+            this.$store.dispatch('updateItem', obj)
+            this.$router.push({
+              name: 'list'
+            })
           }
+        }).catch(err => {
+          console.error(err)
         })
       }
     },

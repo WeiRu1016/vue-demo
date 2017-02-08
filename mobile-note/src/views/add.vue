@@ -11,7 +11,6 @@
   import myHead from '../components/myHead.vue'
   import typeList from '../components/typeList.vue'
   import myCounter from '../components/myCounter.vue'
-  import $ from 'webpack-zepto'
   
   export default{
     name: 'add',
@@ -36,23 +35,18 @@
       },
       addSubmit (item) {
         console.log('添加的item:', item)
-        $.ajax({
-          type: 'post',
-          data: item,
-          url: '/api/list/add',
-          success: (data) => {
-            if (data.code === 200) {
-              console.log('添加成功')
-              debugger
-              this.$store.dispatch('addItem', data.item)
-              this.$router.push({
-                name: 'list'
-              })
-            }
-          },
-          error: (error) => {
-            console.error(error)
+        this.$http.post('/api/list/add', {params: item}).then(response => {
+          let data = response.body
+          if (data.code === 200) {
+            console.log('添加成功')
+            debugger
+            this.$store.dispatch('addItem', data.item)
+            this.$router.push({
+              name: 'list'
+            })
           }
+        }).catch(err => {
+          console.error(err)
         })
       }
     },

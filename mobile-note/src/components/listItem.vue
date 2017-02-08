@@ -31,7 +31,7 @@
     methods: {
       showButton () {
         debugger
-        this.$emit('showButton')
+        this.$emit('showButton', this.item._id)
         this.show = !this.show
       },
       removeItem (id) {

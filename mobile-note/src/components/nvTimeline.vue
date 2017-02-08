@@ -1,18 +1,18 @@
 <template>
   <div>
-    <div v-for="(item, key) in groupList">
+    <div v-for="(item, key) in dataList">
       <div class="line"></div>
       <router-link :to="{name: 'detail', query:{date:key}}">
         <div class="point"><span class="date">{{key}}</span><span class="money">{{item.incoming - item.outcoming}}</span></div>
       </router-link>
-      <div class="item" v-for="index in item.data">
+      <div class="item" v-for="index in item.items">
         <div class="line"></div>
         <span class="iconfont icon" :class="index.category"></span>
         <span class="text left">{{index.typeName}}</span>
         <span class="text right">{{index.money}}</span>
       </div>
     </div>
-    <div class="noItem" v-if="groupList.length === 0">
+    <div class="noItem" v-if="show">
       <router-link :to="{name: 'add'}">
         <div class="iconfont add">&#xe775;</div>
       </router-link>
@@ -21,18 +21,18 @@
   </div>
 </template>
 <script>
-  import { mapGetters } from 'vuex'
   export default {
     name: 'nvTimeline',
+    props: {
+      dataList: {
+        type: Object,
+        required: true
+      }
+    },
     computed: {
-      ...mapGetters([
-        'groupList'
-      ]),
-      // groupList () {
-      //   return []
-      // },
       show () {
-        return this.groupList.length > 0
+        console.log('shushu:', !this.dataList)
+        return !this.dataList
       }
     }
   }

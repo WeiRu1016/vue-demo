@@ -6,17 +6,20 @@
         <li is="list-item" v-for="item in items" :item="item" ref="item" @showButton="showButton"></li>
       </ul>
     </div>
+    <loading v-if="loading"></loading>
   </div>
 </template>
 <script>
   import nvHead from '../components/nvHead.vue'
   import listItem from '../components/listItem.vue'
-  import $ from 'webpack-zepto'
+  import loading from '../components/loading.vue'
+
   export default {
     name: 'detail',
     data: function () {
       return {
-        items: []
+        items: [],
+        loading: true
       }
     },
     computed: {
@@ -26,31 +29,30 @@
     },
     components: {
       nvHead,
-      listItem
+      listItem,
+      loading
     },
     methods: {
       getItems (date) {
-        $.ajax({
-          url: '/api/list/findByDate',
-          type: 'get',
-          data: {
-            date: date
-          },
-          success: (data) => {
-            if (data.code === 200) {
-              console.log(data.items)
-              this.items = data.items
-            }
-          },
-          error: (err) => {
-            console.error(err)
+        debugger
+        this.$http.get('/api/list/findByDate', {params: {date: date}}).then(response => {
+          debugger
+          let data = response.body
+          if (data.code === 200) {
+            console.log(data.list)
+            this.items = data.list
+            this.loading = false
           }
+        }).catch(err => {
+          console.error(err)
         })
       },
-      showButton () {
+      showButton (id) {
         debugger
         this.$refs.item.forEach(function (ele) {
-          ele.show = false
+          if (ele._id !== id) {
+            ele.show = false
+          }
         })
       }
     },

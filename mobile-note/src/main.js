@@ -3,10 +3,12 @@
 import Vue from 'vue'
 import App from './App'
 import VueRouter from 'vue-router'
+import VueResource from 'vue-resource'
 import routes from './routes'
 import store from './vuex/store'
 
 Vue.use(VueRouter)
+Vue.use(VueResource)
 
 console.log('main.js')
 const router = new VueRouter({

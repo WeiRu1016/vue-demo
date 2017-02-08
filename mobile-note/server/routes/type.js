@@ -1,14 +1,8 @@
 var express = require('express')
 var router = express.Router()
-var ItemModel = require('../models/type')
+// var ItemModel = require('../models/type')
+const itemController = require('../controller/type')
 
-router.get('/find', function (req, res, next) {
-  var query = req.query.type ? req.query : {}
-  ItemModel.find(query, function (err, docs) {
-    if (err) {
-      return res.send(new Error(err))
-    }
-    return res.jsonp({code: 200, list: docs})
-  })
-})
+router.get('/find', itemController.findType)
+
 module.exports = router

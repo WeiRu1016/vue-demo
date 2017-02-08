@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'iconfont';  /* project id 226645 */
-  src: url('//at.alicdn.com/t/font_97a9xomk8b9e8kt9.eot');
-  src: url('//at.alicdn.com/t/font_97a9xomk8b9e8kt9.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_97a9xomk8b9e8kt9.woff') format('woff'),
-  url('//at.alicdn.com/t/font_97a9xomk8b9e8kt9.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_97a9xomk8b9e8kt9.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_ehh81xyfyha4te29.eot');
+  src: url('//at.alicdn.com/t/font_ehh81xyfyha4te29.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_ehh81xyfyha4te29.woff') format('woff'),
+  url('//at.alicdn.com/t/font_ehh81xyfyha4te29.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_ehh81xyfyha4te29.svg#iconfont') format('svg');
 }
 
 .iconfont {
@@ -60,4 +60,9 @@
 .icon-chart::before{
   content: "\e618";
   margin-right: 20px;
+}
+
+.icon-loading{
+  text-align: center;
+  font-size: 40px;
 }
