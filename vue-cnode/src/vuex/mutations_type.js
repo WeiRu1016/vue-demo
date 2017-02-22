@@ -1,0 +1,6 @@
+export const SETUSERINFO = 'SETUSERINFO'
+export const SETTOPICS = 'SETTOPICS'
+export const SETSEARCHKEY = 'SETSEARCHKEY'
+export const SETTOPIC = 'SETTOPIC'
+export const CLEARTOPIC = 'CLEARTOPIC'
+

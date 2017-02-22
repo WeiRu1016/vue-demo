@@ -1,3 +1,4 @@
+import store from './vuex/store'
 export default [
   {
     path: '/list',
@@ -14,6 +15,12 @@ export default [
   {
     path: '/topic/:id',
     name: 'topic',
+    beforeEnter: (to, from, next) => {
+      debugger
+      store.dispatch('setTopic', to.params.id).then(data => {
+        console.log('success')
+      })
+    },
     component (resolve) {
       require.ensure([], () => {
         resolve(require('./views/topic.vue'))
