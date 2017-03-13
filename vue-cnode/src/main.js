@@ -4,7 +4,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import routes from './routes'
 import store from './vuex/store'
-import $ from 'webpack-zepto'
 import * as filters from './filter'
 import scroll from './directives/loadMore'
 import App from './App.vue'
@@ -12,7 +11,6 @@ import App from './App.vue'
 Vue.use(VueRouter)
 Vue.directive('loadMore', scroll)
 
-$.ajaxSettings.crossDomain = true
 for (var filter in filters) {
   Vue.filter(filter, filters[filter])
 }
@@ -22,7 +20,7 @@ const router = new VueRouter({
 })
 /* eslint-disable no-new */
 new Vue({
-  router,
   store,
+  router,
   render: h => h(App)
 }).$mount('#app')

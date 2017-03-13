@@ -2,11 +2,12 @@
   <div>
     <nv-head :fixed="true" :tabType="tabTypeName" :needAdd="true" ref="head"></nv-head>
     <div class="page" >
-      <ul class="list-topic" v-loadMore="getScrollData">
+      <ul v-if="topics.length" class="list-topic" v-loadMore="getScrollData">
         <li v-for="topic in topics" is="list-item" :topic="topic">
         </li>
       </ul>
       <loading v-if="!scroll"></loading>
+      <div v-if="error" @click="getTopics">网络加载错误，点击重试</div>
     </div>
     <nv-top></nv-top>
   </div>
@@ -18,6 +19,7 @@
   import nvTop from '../components/nvTop.vue'
   import * as untils from '../lib/untils'
   import $ from 'webpack-zepto'
+  import {mapGetters} from 'vuex'
 
   export default{
     name: 'list',
@@ -26,86 +28,51 @@
         searchKey: {
           page: 1,
           limit: 20,
-          tab: 'all',
-          mdrender: true
+          tab: 'all'
         },
-        topics: [],
-        scroll: true
+        scroll: false,
+        error: false
       }
     },
     mounted () {
-      if (this.$route && this.$route.query.tab) {
-        debugger
-        this.searchKey.tab = this.$route.query.tab
-      }
-      // if (window.sessionStorage.tab === this.searchKey.tab) {
-      //   this.scroll = true
-      //   this.topics = JSON.parse(window.sessionStorage.topics)
-      //   this.searchKey = JSON.parse(window.sessionStorage.searchKey)
-      //   scrollTop = window.sessionStorage.scrollTop
-      // } else {
       this.getTopics()
-      // }
     },
     methods: {
-      getTopics () {
-        let params = $.param(this.searchKey)
-        $.get('https://cnodejs.org/api/v1/topics?' + params, d => {
-          debugger
-          this.scroll = true
-          this.topics = d.data
-        })
-      },
       getScrollData () {
-        debugger
         if (this.scroll) {
           this.scroll = false
-          this.searchKey.limit += 20
+          this.searchKey.page += 1
           this.getTopics()
         }
+      },
+      getTopics () {
+        this.$store.dispatch('setTopics', this.searchKey).then(data => {
+          this.scroll = true
+        }).catch(err => {
+          console.log(err)
+          this.scroll = false
+          this.error = true
+        })
       }
     },
-    // beforeRouterEnter (to, from, next) {
-    //   // 在渲染改组件的对应路由被confirm前调用
-    //   // 不！能！获取组件的实例'this'
-    //   // 因为当钩子执行前，组件实例还没创建
-    //   if (from.name !== 'topic') {
-    //     if (window.sessionStorage.tab) {
-    //       window.sessionStorage.removeItem('topics')
-    //       window.sessionStorage.removeItem('searchKey')
-    //       window.sessionStorage.removeItem('tab')
-    //     }
-    //   }
-    //   $(window).off('scroll')
-    //   next()
-    // },
-    // beforeRouterLeave (to, from, next) {
-    //   // 导航离开该组件的对应路由时调用
-    //   // 可以访问组件实例'this'
-    //   if (to.name === 'topic') {
-    //     window.sessionStorage.scrollTop = window.scrollTop
-    //     window.sessionStorage.topics = JSON.stringify(this.topics)
-    //     window.sessionStorage.searchKey = JSON.stringify(this.searchKey)
-    //     window.sessionStorage.tab = JSON.stringify(this.searchKey.tab)
-    //   }
-    //   next()
-    // },
     computed: {
       tabTypeName () {
-        debugger
         return untils.getTabName(this.searchKey.tab)
-      }
+      },
+      ...mapGetters({
+        topics: 'getTopics'
+      })
     },
     watch: {
-      $route (to, from, next) {
-        if (this.$route && this.$route.query.tab) {
-          this.searchKey.tab = this.$route.query.tab
-          this.searchKey.limit = 20
+      $route (to, from) {
+        if (to.name === 'list' && to.query.tab) {
+          this.searchKey.tab = to.query.tab
+          this.searchKey.page = 1
           $(window).scrollTop(0)
         }
-        this.getTopics()
-        debugger
+        this.scroll = false
         this.$refs.head.show = false
+        this.getTopics()
       }
     },
     components: {

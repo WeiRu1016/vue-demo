@@ -31,7 +31,6 @@
     },
     methods: {
       getTimeago (time) {
-        debugger
         let timeagoInstance = new Timeago()
         let str = timeagoInstance.format(new Date(time), 'zh_CN')
         return str

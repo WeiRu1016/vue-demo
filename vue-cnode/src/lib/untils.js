@@ -54,7 +54,6 @@ export const getStyle = (tab, top, good) => {
 export const limiting = (fn, delay, time) => {
   let start = new Date()
   return function () {
-    debugger
     let current = new Date()
     let time = null
     clearTimeout(time)

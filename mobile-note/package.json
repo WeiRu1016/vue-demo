@@ -13,6 +13,8 @@
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs"
   },
   "dependencies": {
+    "timeago": "^1.5.4",
+    "timeago.js": "^2.0.5",
     "vue": "^2.1.0",
     "vue-resource": "^1.2.0",
     "vue-router": "^2.1.3",

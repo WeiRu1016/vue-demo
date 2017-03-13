@@ -63,8 +63,8 @@
         show: true,
         currentIndex: 0,
         op: '',
-        numbers: this.count > 0 ? [this.count.toString(), ''] : ['', ''],
-        money: this.count
+        numbers: ['', ''],
+        money: 0
       }
     },
     methods: {
@@ -153,6 +153,12 @@
         }
         this.$emit('submit', item)
       }
+    },
+    mounted () {
+      this.$nextTick(() => {
+        this.numbers = this.count > 0 ? [this.count.toString(), ''] : ['', '']
+        this.money = this.count
+      })
     }
   }
 </script>
