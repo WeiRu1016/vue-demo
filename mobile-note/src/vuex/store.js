@@ -6,7 +6,8 @@ Vue.use(Vuex)
 
 let state = {
   list: null,
-  typeList: null
+  typeList: null,
+  testBoo: {a: {b: [1, 2, 3]}}
 }
 let store = new Vuex.Store({
   state,
@@ -21,11 +22,16 @@ let store = new Vuex.Store({
       if (!state.list) {
         state.list = {}
       }
-      debugger
       filter(state.list, payload)
+    },
+    testBoo (state, payload) {
+      state.testBoo.a.b.push(6)
     }
   },
   actions: {
+    setTest ({commit}) {
+      commit('testBoo', true)
+    },
     getTypes ({commit}) {
       return new Promise((resolve, reject) => {
         Vue.http.get('/api/type/find').then(response => {
@@ -48,7 +54,6 @@ let store = new Vuex.Store({
           debugger
           let data = response.body
           if (data.code === 200) {
-            console.log('返回的数据', data.list)
             commit(mutationsType.GETINDEX, data.list)
           }
           resolve(data.list)

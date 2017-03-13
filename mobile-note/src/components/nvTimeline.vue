@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div v-for="(item, key) in test">
+      <div v-for="i in item.b">{{i}}</div>
+    </div>
     <div v-for="(item, key) in dataList">
       <div class="line"></div>
       <router-link :to="{name: 'detail', query:{date:key}}">
@@ -8,8 +11,8 @@
       <div class="item" v-for="index in item.items">
         <div class="line"></div>
         <span class="iconfont icon" :class="index.category"></span>
-        <span class="text left">{{index.typeName}}</span>
-        <span class="text right">{{index.money}}</span>
+        <!--<span class="text left">{{index.typeName}}</span>
+        <span class="text right">{{index.money}}</span>-->
       </div>
     </div>
     <div class="noItem" v-if="show">
@@ -21,30 +24,28 @@
   </div>
 </template>
 <script>
-  import { mapGetters } from 'vuex'
   export default {
     name: 'nvTimeline',
     props: {
-      // dataList: {
-      //   type: Object,
-      //   required: true
-      // }
-    },
-    computed: {
-      ...mapGetters({
-        dataList: 'getList'
-      }),
-      show () {
-        console.log('shushu:', !this.dataList)
-        return !this.dataList || !(JSON.stringify({}).length === 2)
+      dataList: {
+        type: Object,
+        required: true
+      },
+      test: {
+        type: Object
       }
     },
-    mounted () {
-      console.log('timeline', this.dataList)
+    computed: {
+      show () {
+        return !this.dataList || !(JSON.stringify({}).length === 2)
+      }
     },
     watch: {
       dataList (newData) {
         console.log('newData', newData)
+      },
+      test (d) {
+        console.log('dddddddddddd', d)
       }
     }
   }

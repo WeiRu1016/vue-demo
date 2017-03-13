@@ -3,7 +3,7 @@
     <nv-head title="首页" :query="{}"></nv-head>
     <div class="page" v-if="!loading">
       <button @click="test">click</button>
-      <nv-timeline :dataList="groupList"></nv-timeline>
+      <nv-timeline :dataList="groupList" :test="testBoo"></nv-timeline>
       <div v-show="!scroll" class="loading-image iconfont icon-loading"><span class="loading">&#xe602;</span></div>
     </div>
     <loading v-if="loading"></loading>
@@ -24,13 +24,14 @@
         scroll: true,
         searchKey: {
           page: 0,
-          limit: 20
+          limit: 1
         }
       }
     },
     computed: {
       ...mapState({
-        groupList: 'list'
+        groupList: 'list',
+        testBoo: 'testBoo'
       })
     },
     components: {
@@ -40,7 +41,8 @@
     },
     methods: {
       test () {
-        this.getIndex()
+        this.getScrollData()
+        // this.$store.dispatch('setTest')
       },
       getIndex () {
         debugger
@@ -50,7 +52,7 @@
           console.log('groupList', this.groupList)
         })
       },
-      getScrollData (event) {
+      getScrollData () {
         let totalHeight = document.body.scrollHeight
         let scrollTop = document.body.scrollTop
         let height = document.body.clientHeight
