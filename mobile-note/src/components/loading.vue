@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="iconfont icon-loading"><span class="loading">&#xe602;</span></div>
+    <div class="loading-image iconfont icon-loading"><span class="loading">&#xe602;</span></div>
     <div class="page_over"></div>
     <slot></slot>
   </div>
@@ -11,10 +11,22 @@
   }
 </script>
 <style scoped lang="scss">
+  .loading-image {
+    position: fixed;
+    top: 0;
+    left:0;
+    right:0;
+    bottom:0;
+    margin: auto;
+    width: 100%;
+    height: 90px;
+  }
   .loading{
     animation: loading 1s linear;
     animation-iteration-count: infinite;
     display: inline-block;
+    position: relative;
+    z-index: 999;
   }
   @keyframes loading{
     0%{

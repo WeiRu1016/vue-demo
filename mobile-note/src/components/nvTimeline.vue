@@ -21,18 +21,30 @@
   </div>
 </template>
 <script>
+  import { mapGetters } from 'vuex'
   export default {
     name: 'nvTimeline',
     props: {
-      dataList: {
-        type: Object,
-        required: true
-      }
+      // dataList: {
+      //   type: Object,
+      //   required: true
+      // }
     },
     computed: {
+      ...mapGetters({
+        dataList: 'getList'
+      }),
       show () {
         console.log('shushu:', !this.dataList)
-        return !this.dataList
+        return !this.dataList || !(JSON.stringify({}).length === 2)
+      }
+    },
+    mounted () {
+      console.log('timeline', this.dataList)
+    },
+    watch: {
+      dataList (newData) {
+        console.log('newData', newData)
       }
     }
   }

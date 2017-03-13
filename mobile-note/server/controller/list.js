@@ -1,22 +1,14 @@
 const {wrap: async} = require('co')
 const Item = require('../models/item')
 exports.index = async(function * (req, res, next) {
-  let page = req.query.page
-  let limit = req.query.limit
+  let page = parseInt(req.query.page)
+  let limit = parseInt(req.query.limit)
   yield Item.all(page, limit).then((data) => {
-    let list = {}
+    let list = []
     for (let ele of data) {
       ele = ele.toObject()
       ele.date = ele.date.toLocaleDateString()
-      if (!list[ele.date]) {
-        list[ele.date] = {
-          incoming: 0,
-          outcoming: 0,
-          items: []
-        }
-      }
-      list[ele.date].items.push(ele)
-      ele.type === 'in' ? list[ele.date].incoming += ele.money : list[ele.date].outcoming += ele.money
+      list.push(ele)
     }
     return res.jsonp({
       code: 200,
