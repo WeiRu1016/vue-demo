@@ -26,6 +26,7 @@ let store = new Vuex.Store({
     },
     testBoo (state, payload) {
       state.testBoo.a.b.push(6)
+      state.testBoo.b = {b: ['c']}
     }
   },
   actions: {
