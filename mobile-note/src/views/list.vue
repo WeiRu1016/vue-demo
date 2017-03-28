@@ -41,15 +41,19 @@
     },
     methods: {
       test () {
-        this.getScrollData()
-        // this.$store.dispatch('setTest')
+        // this.getScrollData()
+        this.$store.dispatch('setTest', this.searchKey).then(data => {
+          this.loading = false
+        })
+        // this.searchKey.page += 1
       },
       getIndex () {
         debugger
         this.$store.dispatch('getIndex', this.searchKey).then(data => {
-          this.loading = false
+          // this.loading = false
           this.scroll = true
           console.log('groupList', this.groupList)
+          console.log(JSON.stringify(this.groupList).length)
         })
       },
       getScrollData () {
@@ -59,14 +63,20 @@
         if (height + scrollTop + 50 >= totalHeight) {
           if (this.scroll) {
             this.scroll = false
+            // this.$store.dispatch('setTest', this.searchKey).then(data => {
+            //   this.searchKey.page += 1
+            //   this.scroll = true
+            // })
             this.searchKey.page += 1
             this.getIndex()
+            this.test()
           }
         }
       }
     },
     mounted () {
       this.getIndex()
+      this.test()
       document.addEventListener('scroll', throttle(this.getScrollData, 300, 1000))
     }
   }

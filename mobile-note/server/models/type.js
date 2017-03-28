@@ -12,7 +12,7 @@ typeModel.all = () => {
   return typeModel.find().exec()
 }
 typeModel.add = (type) => {
-  return typeModel.create(type).exec()
+  return typeModel.create(type)
 }
 
 module.exports = typeModel

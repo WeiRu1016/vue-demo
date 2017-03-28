@@ -71,7 +71,7 @@ exports.dateList = async(function * (req, res, next) {
   })
 })
 exports.add = async(function * (req, res, next) {
-  let item = req.body
+  let item = req.body.params
   yield Item.add(item).then(data => {
     data = data.toObject()
     data.date = data.date.toLocaleDateString()

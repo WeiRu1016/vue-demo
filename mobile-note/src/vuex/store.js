@@ -7,7 +7,15 @@ Vue.use(Vuex)
 let state = {
   list: null,
   typeList: null,
-  testBoo: {a: {b: [1, 2, 3]}}
+  testBoo: {
+    '2017-3-14': {
+      items: [
+        {
+          typeName: 'lllll'
+        }
+      ]
+    }
+  }
 }
 let store = new Vuex.Store({
   state,
@@ -25,12 +33,29 @@ let store = new Vuex.Store({
       filter(state.list, payload)
     },
     testBoo (state, payload) {
-      state.testBoo.a.b.push(6)
+      debugger
+      if (!state.testBoo) {
+        state.testBoo = {}
+      }
+      filter(state.testBoo, payload)
+      console.log('state', state.testBoo)
     }
   },
   actions: {
-    setTest ({commit}) {
-      commit('testBoo', true)
+    setTest ({commit}, {page, limit}) {
+      return new Promise((resolve, reject) => {
+        Vue.http.get(`/api/list/find?page=${page || 0}&limit=${limit}`).then(response => {
+          debugger
+          let data = response.body
+          if (data.code === 200) {
+            commit('testBoo', data.list)
+          }
+          resolve(data.list)
+        }).catch(err => {
+          console.error(err)
+          reject(err)
+        })
+      })
     },
     getTypes ({commit}) {
       return new Promise((resolve, reject) => {
@@ -75,6 +100,7 @@ let filter = (o, arrList) => {
   for (let k of arrList) {
     let date = k.date
     if (!o[date]) {
+      debugger
       o[date] = {
         incoming: 0,
         items: [],
@@ -84,6 +110,7 @@ let filter = (o, arrList) => {
     o[date].items.push(k)
     k.type === 'in' ? (o[date].incoming += k.money) : (o[date].outcoming += k.money)
   }
+  console.log('filter', o)
 }
 export default store
 

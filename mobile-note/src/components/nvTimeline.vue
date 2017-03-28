@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-for="(item, key) in test">
-      <div v-for="i in item.b">{{i}}</div>
+      <div v-for="i in item.items">{{i.typeName}}</div>
     </div>
     <div v-for="(item, key) in dataList">
       <div class="line"></div>
@@ -11,8 +11,8 @@
       <div class="item" v-for="index in item.items">
         <div class="line"></div>
         <span class="iconfont icon" :class="index.category"></span>
-        <!--<span class="text left">{{index.typeName}}</span>
-        <span class="text right">{{index.money}}</span>-->
+        <span class="text left">{{index.typeName}}</span>
+        <span class="text right">{{index.money}}</span>
       </div>
     </div>
     <div class="noItem" v-if="show">
@@ -24,6 +24,7 @@
   </div>
 </template>
 <script>
+  // import { mapState } from 'vuex'
   export default {
     name: 'nvTimeline',
     props: {
@@ -32,13 +33,17 @@
         required: true
       },
       test: {
-        type: Object
+        type: Object,
+        required: true
       }
     },
     computed: {
       show () {
-        return !this.dataList || !(JSON.stringify({}).length === 2)
+        return !this.dataList || (JSON.stringify(this.dataList).length === 2)
       }
+    },
+    mounted () {
+      debugger
     },
     watch: {
       dataList (newData) {
