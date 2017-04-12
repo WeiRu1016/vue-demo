@@ -1,9 +1,6 @@
 <template>
   <div>
-    <div v-for="(item, key) in test">
-      <div v-for="i in item.items">{{i.typeName}}</div>
-    </div>
-    <div v-for="(item, key) in dataList">
+    <div v-for="(item, key) in datalist">
       <div class="line"></div>
       <router-link :to="{name: 'detail', query:{date:key}}">
         <div class="point"><span class="date">{{key}}</span><span class="money">{{item.incoming - item.outcoming}}</span></div>
@@ -24,33 +21,17 @@
   </div>
 </template>
 <script>
-  // import { mapState } from 'vuex'
   export default {
     name: 'nvTimeline',
     props: {
-      dataList: {
-        type: Object,
-        required: true
-      },
-      test: {
+      datalist: {
         type: Object,
         required: true
       }
     },
     computed: {
       show () {
-        return !this.dataList || (JSON.stringify(this.dataList).length === 2)
-      }
-    },
-    mounted () {
-      debugger
-    },
-    watch: {
-      dataList (newData) {
-        console.log('newData', newData)
-      },
-      test (d) {
-        console.log('dddddddddddd', d)
+        return !this.datalist || (JSON.stringify(this.datalist).length === 2)
       }
     }
   }

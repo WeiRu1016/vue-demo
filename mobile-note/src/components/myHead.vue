@@ -1,6 +1,6 @@
 <template>
   <header class="myHead">
-    <span class="iconfont back">&#xe833;</span>
+    <span class="iconfont back" @click="goback">&#xe833;</span>
     <span class="title" v-text="title"></span>
   </header>
 </template>
@@ -11,6 +11,11 @@
       title: {
         type: String,
         required: true
+      }
+    },
+    methods: {
+      goback () {
+        this.$router.go(-1)
       }
     }
   }

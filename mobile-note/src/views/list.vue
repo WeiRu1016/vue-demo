@@ -2,8 +2,7 @@
   <div>
     <nv-head title="首页" :query="{}"></nv-head>
     <div class="page" v-if="!loading">
-      <button @click="test">click</button>
-      <nv-timeline :dataList="groupList" :test="testBoo"></nv-timeline>
+      <nv-timeline :datalist="groupList"></nv-timeline>
       <div v-show="!scroll" class="loading-image iconfont icon-loading"><span class="loading">&#xe602;</span></div>
     </div>
     <loading v-if="loading"></loading>
@@ -14,24 +13,28 @@
   import nvTimeline from '../components/nvTimeline.vue'
   import loading from '../components/loading.vue'
   import { throttle } from '../assets/js/until'
-  import { mapState } from 'vuex'
+  import { mapGetters } from 'vuex'
 
   export default {
     name: 'list',
     data () {
       return {
-        loading: true,
-        scroll: true,
+        loading: true, // 加载中标志
+        scroll: true, // 是否可以滚动
+        test: {
+          'a': {
+            'b': '123'
+          }
+        },
         searchKey: {
           page: 0,
-          limit: 1
-        }
+          limit: 20
+        }// 请求参数
       }
     },
     computed: {
-      ...mapState({
-        groupList: 'list',
-        testBoo: 'testBoo'
+      ...mapGetters({
+        groupList: 'getList'
       })
     },
     components: {
@@ -40,44 +43,35 @@
       loading
     },
     methods: {
-      test () {
-        // this.getScrollData()
-        this.$store.dispatch('setTest', this.searchKey).then(data => {
-          this.loading = false
-        })
-        // this.searchKey.page += 1
-      },
       getIndex () {
         debugger
         this.$store.dispatch('getIndex', this.searchKey).then(data => {
-          // this.loading = false
+          this.loading = false
           this.scroll = true
-          console.log('groupList', this.groupList)
-          console.log(JSON.stringify(this.groupList).length)
         })
       },
       getScrollData () {
         let totalHeight = document.body.scrollHeight
         let scrollTop = document.body.scrollTop
         let height = document.body.clientHeight
-        if (height + scrollTop + 50 >= totalHeight) {
+        if (height + scrollTop + 100 >= totalHeight) {
           if (this.scroll) {
             this.scroll = false
-            // this.$store.dispatch('setTest', this.searchKey).then(data => {
-            //   this.searchKey.page += 1
-            //   this.scroll = true
-            // })
             this.searchKey.page += 1
             this.getIndex()
-            this.test()
           }
         }
       }
     },
     mounted () {
       this.getIndex()
-      this.test()
-      document.addEventListener('scroll', throttle(this.getScrollData, 300, 1000))
+      console.log(this.test)
+      window.addEventListener('scroll', throttle(this.getScrollData, 200, 100))
+    },
+    watch: {
+      groupList: () => {
+        console.log('变化了')
+      }
     }
   }
 </script>

@@ -6,16 +6,7 @@ Vue.use(Vuex)
 
 let state = {
   list: null,
-  typeList: null,
-  testBoo: {
-    '2017-3-14': {
-      items: [
-        {
-          typeName: 'lllll'
-        }
-      ]
-    }
-  }
+  typeList: null
 }
 let store = new Vuex.Store({
   state,
@@ -24,39 +15,16 @@ let store = new Vuex.Store({
       if (!state.typeList) {
         state.typeList = {}
       }
-      Object.assign(state.typeList, payload)
+      state.typeList = Object.assign({}, state.typeList, payload)
     },
     [mutationsType.GETINDEX] (state, payload) {
       if (!state.list) {
         state.list = {}
       }
-      filter(state.list, payload)
-    },
-    testBoo (state, payload) {
-      debugger
-      if (!state.testBoo) {
-        state.testBoo = {}
-      }
-      filter(state.testBoo, payload)
-      console.log('state', state.testBoo)
+      state.list = Object.assign({}, filter(state.list, payload))
     }
   },
   actions: {
-    setTest ({commit}, {page, limit}) {
-      return new Promise((resolve, reject) => {
-        Vue.http.get(`/api/list/find?page=${page || 0}&limit=${limit}`).then(response => {
-          debugger
-          let data = response.body
-          if (data.code === 200) {
-            commit('testBoo', data.list)
-          }
-          resolve(data.list)
-        }).catch(err => {
-          console.error(err)
-          reject(err)
-        })
-      })
-    },
     getTypes ({commit}) {
       return new Promise((resolve, reject) => {
         Vue.http.get('/api/type/find').then(response => {
@@ -110,7 +78,7 @@ let filter = (o, arrList) => {
     o[date].items.push(k)
     k.type === 'in' ? (o[date].incoming += k.money) : (o[date].outcoming += k.money)
   }
-  console.log('filter', o)
+  return o
 }
 export default store
 
